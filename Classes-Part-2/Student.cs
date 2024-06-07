@@ -30,21 +30,84 @@ namespace Classes_Part_2
         // TODO: Complete the AddGrade method.
         public void AddGrade(int courseCredits, double grade)
         {
-            // Update the appropriate properties: NumberOfCredits, Gpa
+
+            int previousCredits = this.NumberOfCredits;
+            double previousGpa = this.Gpa;
+
+            this.NumberOfCredits = previousCredits + courseCredits;
+
+
+            double points = previousCredits * previousGpa;
+
+            if (grade >= 90)
+            {
+                points += 4 * courseCredits;
+            }
+            else if (grade < 90 && grade >= 80)
+            {
+                points += 3 * courseCredits;
+            }
+            else if (grade < 80 && grade >= 70)
+            {
+                points += 2 * courseCredits;
+            }
+            else if (grade < 70 && grade >= 60)
+            {
+                points += 1 * courseCredits;
+            }
+
+            this.Gpa = points / this.NumberOfCredits;
         }
 
-        //TODO: Complete the GetGradeLevel method here:
+        //TODONE: Complete the GetGradeLevel method here:
         public string GetGradeLevel(int credits)
         {
-            // Determine the grade level of the student based on NumberOfCredits
-            return "grade level tbd";
+            if (credits <= 29)
+            {
+                return "Freshman";
+            }
+            else if (credits <= 59)
+            {
+                return "Sophomore";
+            }
+            else if (credits <= 89)
+            {
+                return "Junior";
+            }
+            else
+            {
+                return "Senior";
+            }
         }
 
-        // TODO: Add your custom 'ToString' method here. Make sure it returns a well-formatted string rather
+        // TODONE: Add your custom 'ToString' method here. Make sure it returns a well-formatted string rather
         //  than just the class fields.
+        public override string ToString()
+        {
+            return Name + " (Credits: " + NumberOfCredits + ", GPA: " + Gpa + ")";
+        }
 
-        // TODO: Add your custom 'Equals' method here. Consider which fields should match in order to call two
-        //  Student objects equal.
+
+        // TODONE: Add your custom 'Equals' method here. Consider which fields should match in order to call two Student objects equal.
+        public bool Equals(Student student)
+        {
+            if (student == this)
+            {
+                return true;
+            }
+
+            if (student == null)
+            {
+                return false;
+            }
+
+            if (student.GetType() != this.GetType())
+            {
+                return false;
+            }
+
+            return this.StudentId == student.StudentId;
+        }
     }
 }
 
